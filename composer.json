@@ -1,0 +1,41 @@
+{
+    "name": "pudongping/smart-assist",
+    "description": "PHP utility functions.",
+    "type": "library",
+    "license": "MIT",
+    "keywords": [
+        "php",
+        "utils",
+        "tools"
+    ],
+    "autoload": {
+        "psr-4": {
+            "Pudongping\\SmartAssist\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Pudongping\\SmartAssist\\Tests\\": "tests/"
+        }
+    },
+    "authors": [
+        {
+            "name": "pudongping",
+            "email": "pudongping67@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=7.2",
+        "ext-mbstring": "*",
+        "ext-json": "*",
+        "ext-openssl": "*"
+    },
+    "config": {
+        "optimize-autoloader": true,
+        "sort-packages": true
+    },
+    "require-dev": {
+        "mockery/mockery": "^1.5",
+        "phpunit/phpunit": "^9.6"
+    }
+}
