@@ -84,4 +84,70 @@ class ArrHelper
         }, $data);
     }
 
+    /**
+     * 找到二维数组中指定索引名值最小的元素
+     *
+     * @param array $data 二维数组
+     * @param string $key 索引名称
+     * @param bool $firstAs 出现多个最小值时，是否允许第一个元素作为被挑选元素，true 为是，false 则为最后一个元素作为被挑选元素
+     * @return array
+     */
+    public static function minIntElement(array $data, string $key, bool $firstAs = true): array
+    {
+        $max = PHP_INT_MAX;
+        $element = [];
+        if (empty($data)) {
+            return [];
+        }
+
+        foreach ($data as $item) {
+            if ($firstAs) {
+                if ($item[$key] < $max) {
+                    $max = $item[$key];
+                    $element = $item;
+                }
+            } else {
+                if ($item[$key] <= $max) {
+                    $max = $item[$key];
+                    $element = $item;
+                }
+            }
+        }
+
+        return $element;
+    }
+
+    /**
+     * 找到二维数组中指定索引名值最大的元素
+     *
+     * @param array $data 二维数组
+     * @param string $key 索引名称
+     * @param bool $firstAs 出现多个最大值时，是否允许第一个元素作为被挑选元素，true 为是，false 则为最后一个元素作为被挑选元素
+     * @return array
+     */
+    public static function maxIntElement(array $data, string $key, bool $firstAs = true): array
+    {
+        $min = PHP_INT_MIN;
+        $element = [];
+        if (empty($data)) {
+            return [];
+        }
+
+        foreach ($data as $item) {
+            if ($firstAs) {
+                if ($item[$key] > $min) {
+                    $min = $item[$key];
+                    $element = $item;
+                }
+            } else {
+                if ($item[$key] >= $min) {
+                    $min = $item[$key];
+                    $element = $item;
+                }
+            }
+        }
+
+        return $element;
+    }
+
 }

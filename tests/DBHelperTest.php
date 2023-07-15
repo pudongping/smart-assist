@@ -16,6 +16,7 @@ use Pudongping\SmartAssist\DBHelper;
 class DBHelperTest extends TestCase
 {
 
+    //  ./vendor/bin/phpunit --filter testBatchUpdateCaseWhen
     public function testBatchUpdateCaseWhen()
     {
         $where = [ 'id' => [180, 181, 182, 183], 'user_id' => [5, 15, 11, 1]];
@@ -30,6 +31,7 @@ class DBHelperTest extends TestCase
         $this->assertEquals($guest, $test1);
     }
 
+    //  ./vendor/bin/phpunit --filter testUpsert
     public function testUpsert()
     {
         $tableName = 'my_table';

@@ -16,6 +16,7 @@ use Pudongping\SmartAssist\CipherHelper;
 class CipherHelperTest extends TestCase
 {
 
+    //  ./vendor/bin/phpunit --filter testAESCBCEncrypt
     public function testAESCBCEncrypt()
     {
         $arr = [

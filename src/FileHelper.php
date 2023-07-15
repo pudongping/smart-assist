@@ -29,21 +29,4 @@ class FileHelper
         return sprintf("%.{$decimals}f", $bytes / pow(1024, $factor)) . @$size[$factor];
     }
 
-    /**
-     * 确保文件或者目录存在且可写
-     *
-     * @param string $path
-     * @param bool $isDir
-     * @return bool
-     */
-    public static function sureWritableExists(string $path, bool $isDir = false): bool
-    {
-        if (file_exists($path)) {
-            return is_writable($path);
-        }
-
-        $dir = $isDir ? $path : dirname($path);
-        return ! file_exists($dir) && ! mkdir($dir, 0775, true) && ! is_dir($dir) ? false : is_writable($dir);
-    }
-
 }

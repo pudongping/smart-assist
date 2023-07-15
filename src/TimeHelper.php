@@ -15,6 +15,7 @@ class TimeHelper
 
     /**
      * 毫秒
+     *
      * 1 秒（s）= 1,000 毫秒（ms）
      *
      * @return int
@@ -26,6 +27,7 @@ class TimeHelper
 
     /**
      * 微秒
+     *
      * 1 秒（s）= 1,000 毫秒（ms）= 1,000,000 微秒（µs）
      *
      * @return int
@@ -37,6 +39,7 @@ class TimeHelper
 
     /**
      * 纳秒
+     *
      * 1 秒（s）= 1,000 毫秒（ms）= 1,000,000 微秒（µs）= 1,000,000,000 纳秒（ns）
      *
      * @return int

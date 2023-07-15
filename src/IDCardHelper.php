@@ -10,6 +10,8 @@ declare(strict_types=1);
 
 namespace Pudongping\SmartAssist;
 
+use DateTime;
+
 class IDCardHelper
 {
 
@@ -37,14 +39,23 @@ class IDCardHelper
      */
     public static function isChinaIDCardDate(string $year, string $month, string $day): bool
     {
-        $date = $year . '-' . $month . '-' . $day;
-        $rPattern = '/^(([0-9]{2})|(19[0-9]{2})|(20[0-9]{2}))-((0[1-9]{1})|(1[012]{1}))-((0[1-9]{1})|(1[0-9]{1})|(2[0-9]{1})|3[01]{1})$/';
+        $dateString = $year . '-' . $month . '-' . $day;
+        $dateFormat = 'Y-m-d';
 
-        if (preg_match($rPattern, $date, $arr)) {
-            return true;
+        $dateTime = DateTime::createFromFormat($dateFormat, $dateString);
+        if ($dateTime === false) {
+            return false;
         }
 
-        return false;
+        // 使用 getdate 函数来获取日期信息
+        $dateInfo = getdate($dateTime->getTimestamp());
+
+        // 检查日期是否合法，包括月份和日期是否在合理范围内
+        if ($dateInfo['year'] != (int)$year || $dateInfo['mon'] != (int)$month || $dateInfo['mday'] != (int)$day) {
+            return false;
+        }
+
+        return true;
     }
 
     /**
