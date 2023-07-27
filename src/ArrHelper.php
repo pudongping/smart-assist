@@ -150,4 +150,34 @@ class ArrHelper
         return $element;
     }
 
+    /**
+     * 将二维数组转化成树型结构
+     *
+     * @param array $arr 二维数组
+     * @param string $id 唯一key名称
+     * @param string $pid 唯一key关联父节点字段
+     * @param string $children 子集名称
+     * @return array
+     */
+    public static function toTree(array $arr, string $id = 'id', string $pid = 'pid', string $children = 'children'): array
+    {
+        if (! $arr) return [];
+
+        $temp = array_column($arr, null, $id);
+        unset($arr);
+
+        $res = [];
+        foreach ($temp as &$v) {
+            $v[$children] = [];
+            if (isset($temp[$v[$pid]])) {
+                $temp[$v[$pid]][$children][] = &$v;
+                unset($res[$v[$id]]);
+            } else {
+                $res[$v[$id]] = &$v;
+            }
+        }
+
+        return array_values($res);
+    }
+
 }

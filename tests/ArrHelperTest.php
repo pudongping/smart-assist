@@ -202,4 +202,77 @@ class ArrHelperTest extends TestCase
         );
     }
 
+    public function testToTree()
+    {
+        // 测试空数组作为输入
+        $this->assertEquals([], ArrHelper::toTree([]));
+
+        // 测试基本二维数组转换成树型结构
+        $inputArray = [
+            ['id' => 1, 'name' => 'A', 'pid' => 0],
+            ['id' => 2, 'name' => 'B', 'pid' => 0],
+            ['id' => 3, 'name' => 'A-1', 'pid' => 1],
+            ['id' => 4, 'name' => 'A-2', 'pid' => 1],
+            ['id' => 5, 'name' => 'B-1', 'pid' => 2],
+        ];
+
+        $expectedResult = [
+            ['id' => 1, 'name' => 'A', 'pid' => 0, 'children' => [
+                ['id' => 3, 'name' => 'A-1', 'pid' => 1, 'children' => []],
+                ['id' => 4, 'name' => 'A-2', 'pid' => 1, 'children' => []],
+            ]],
+            ['id' => 2, 'name' => 'B', 'pid' => 0, 'children' => [
+                ['id' => 5, 'name' => 'B-1', 'pid' => 2, 'children' => []],
+            ]],
+        ];
+
+        $this->assertEquals($expectedResult, ArrHelper::toTree($inputArray));
+
+        // 测试树中的子节点为空
+        $inputArray2 = [
+            ['id' => 1, 'name' => 'A', 'pid' => 0],
+            ['id' => 2, 'name' => 'B', 'pid' => 1],
+            ['id' => 3, 'name' => 'C', 'pid' => 2],
+        ];
+
+        $expectedResult2 = [
+            ['id' => 1, 'name' => 'A', 'pid' => 0, 'children' => [
+                ['id' => 2, 'name' => 'B', 'pid' => 1, 'children' => [
+                    ['id' => 3, 'name' => 'C', 'pid' => 2, 'children' => []],
+                ]],
+            ]],
+        ];
+
+        $this->assertEquals($expectedResult2, ArrHelper::toTree($inputArray2));
+
+        // 测试更多层级的数据
+        $inputArray3 = [
+            ['id' => 1, 'name' => 'A', 'pid' => 0],
+            ['id' => 2, 'name' => 'B', 'pid' => 0],
+            ['id' => 3, 'name' => 'A-1', 'pid' => 1],
+            ['id' => 4, 'name' => 'A-1-1', 'pid' => 3],
+            ['id' => 5, 'name' => 'A-1-2', 'pid' => 3],
+            ['id' => 6, 'name' => 'A-2', 'pid' => 1],
+            ['id' => 7, 'name' => 'A-2-1', 'pid' => 6],
+            ['id' => 8, 'name' => 'B-1', 'pid' => 2],
+        ];
+
+        $expectedResult3 = [
+            ['id' => 1, 'name' => 'A', 'pid' => 0, 'children' => [
+                ['id' => 3, 'name' => 'A-1', 'pid' => 1, 'children' => [
+                    ['id' => 4, 'name' => 'A-1-1', 'pid' => 3, 'children' => []],
+                    ['id' => 5, 'name' => 'A-1-2', 'pid' => 3, 'children' => []],
+                ]],
+                ['id' => 6, 'name' => 'A-2', 'pid' => 1, 'children' => [
+                    ['id' => 7, 'name' => 'A-2-1', 'pid' => 6, 'children' => []],
+                ]],
+            ]],
+            ['id' => 2, 'name' => 'B', 'pid' => 0, 'children' => [
+                ['id' => 8, 'name' => 'B-1', 'pid' => 2, 'children' => []],
+            ]],
+        ];
+
+        $this->assertEquals($expectedResult3, ArrHelper::toTree($inputArray3));
+    }
+
 }

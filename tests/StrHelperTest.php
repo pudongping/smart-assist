@@ -26,6 +26,34 @@ class StrHelperTest extends TestCase
         $this->assertEquals($length, mb_strlen($randomStr));
     }
 
+    //  ./vendor/bin/phpunit --filter testGenRandomChineseWords
+    public function testGenRandomChineseWords()
+    {
+        $num = 10;
+        $result = StrHelper::genRandomChineseWords($num);
+
+        // Assert that the result is a string
+        $this->assertIsString($result);
+
+        // Assert that the length of the result is equal to the given $num
+        $this->assertEquals($num, mb_strlen($result, 'UTF-8'));
+
+        // Assert that the result contains only valid Chinese characters (UTF-8)
+        $this->assertMatchesRegularExpression('/^[\x{4e00}-\x{9fa5}]+$/u', $result);
+    }
+
+    // ./vendor/bin/phpunit --filter testGenUniqueNum
+    public function testGenUniqueNum()
+    {
+        // Test for the default case (not using bigint)
+        $result = StrHelper::genUniqueNum();
+        $this->assertIsString($result);
+
+        // Test for using bigint
+        $resultBigint = StrHelper::genUniqueNum(true);
+        $this->assertIsString($resultBigint);
+    }
+
     //  ./vendor/bin/phpunit --filter testBase64UrlEncodeAndDecode
     public function testBase64UrlEncodeAndDecode()
     {

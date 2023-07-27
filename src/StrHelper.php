@@ -40,10 +40,47 @@ class StrHelper
 
         $randStr = '';
         for ($i = 0; $i < $len; $i++) {
+            mt_srand();  // 重新播种
             $randStr .= $str[mt_rand(0, $l)];
         }
 
         return $randStr;
+    }
+
+    /**
+     * 生成常用随机中文
+     *
+     * @param int $num 生成汉字的数量
+     * @return string
+     */
+    public static function genRandomChineseWords(int $num = 16): string
+    {
+        $str = '';
+        for ($i = 0; $i < $num; $i++) {
+            // 使用 `chr()` 函数拼接双字节汉字，前一个 `chr()` 为高位字节，后一个为低位字节
+            // 一级汉字
+            $s = chr(mt_rand(0xB0, 0xD7)) . chr(mt_rand(0xA1, 0xF0));
+            $str .= iconv('GB2312', 'UTF-8', $s);  // 转码
+        }
+
+        return $str;
+    }
+
+    /**
+     * 基于日期和随机数生成具有唯一性的数字字符串
+     *
+     * @param bool $isBigint
+     * @return string
+     */
+    public static function genUniqueNum(bool $isBigint = false): string
+    {
+        if ($isBigint) {
+            // bigint 类型
+            return time() . date_format(new \DateTime(), 'u') . mt_rand(100, 999);
+        }
+
+        // 都是数字
+        return date_format(new \DateTime(), 'YmdHisu') . str_pad((string)mt_rand(), 10, '0', STR_PAD_LEFT);
     }
 
     /**
@@ -83,7 +120,7 @@ class StrHelper
      *
      * @return string   处理后的字符串
      */
-    public static function hide($string, $start = 0, $length = 0, $re = '*'): string
+    public static function hide(string $string, int $start = 0, int $length = 0, string $re = '*'): string
     {
         if (empty($string)) return $string;
 
